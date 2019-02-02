@@ -1,0 +1,46 @@
+version: '3'
+services:
+    ailyteam-web:
+        image: brouzie/php:7.2
+#        build:
+#          context: .
+        container_name: ailyteam-web
+        hostname: ailyteam-web
+        depends_on:
+            - ailyteam-postgres
+        links:
+            - ailyteam-postgres
+        external_links:
+            - mailcatcher
+        networks:
+            - default
+            - global_default
+        volumes:
+            - composer-cache-volume:/home/dev/.composer/cache
+            - ./mount/var/log/apache2:/var/log/apache2
+            - ./mount/etc/apache2/sites-enabled:/etc/apache2/sites-enabled
+            - ./..:/var/www/html
+        environment:
+            PHP_CONFIG_WEB: xdebug.remote_connect_back=1 max_execution_time=300
+            PASSWORD: 112233
+            EXPOSE_HOSTS: |-
+                ailyteam.test
+
+    ailyteam-postgres:
+        image: postgres:9.6
+        container_name: ailyteam-postgres
+        volumes:
+            - postgres-data-volume:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: ailyteam
+            POSTGRES_USER: ailyteam
+            POSTGRES_PASSWORD: ailyteam
+
+volumes:
+    postgres-data-volume:
+    composer-cache-volume:
+        external: true
+
+networks:
+    global_default:
+        external: true
