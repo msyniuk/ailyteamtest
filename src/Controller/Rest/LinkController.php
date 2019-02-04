@@ -93,10 +93,10 @@ class LinkController extends AbstractFOSRestController
      */
     public function getLinkStatistics(int $linkId): View
     {
-        $link = $this->linkService->getLinkStatistics($linkId);
+        $statistics = $this->linkService->getLinkStatistics($linkId);
 
         // 200 HTTP OK response with the request object
-        return View::create($link, Response::HTTP_OK);
+        return View::create($statistics, Response::HTTP_OK);
     }
 
 }
