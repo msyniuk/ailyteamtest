@@ -131,8 +131,6 @@ class LinkRepository extends ServiceEntityRepository
             $resultAll[0]['date'][$row['date']] = $row['visits_by_date'];
         }
 
-        //$result = array_merge($resultAll, $resultRef, $resultBrowser, $resultDate);
-
         return $resultAll;
 
     }

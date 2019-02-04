@@ -13,6 +13,7 @@ class Date extends FunctionNode
     {
         return "DATE(" . $sqlWalker->walkArithmeticPrimary($this->date) . ")";
     }
+
     public function parse(\Doctrine\ORM\Query\Parser $parser)
     {
         $parser->match(Lexer::T_IDENTIFIER);
@@ -22,4 +23,5 @@ class Date extends FunctionNode
 
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
     }
+
 }

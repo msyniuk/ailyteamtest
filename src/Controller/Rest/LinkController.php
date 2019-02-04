@@ -105,6 +105,7 @@ class LinkController extends AbstractFOSRestController
         if (!$statistics) {
             return View::create('No statistics for this link', Response::HTTP_OK);
         }
+
         // 200 HTTP OK response with the request object
         return View::create($statistics, Response::HTTP_OK);
     }

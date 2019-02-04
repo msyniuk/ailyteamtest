@@ -86,11 +86,13 @@ class LinkService
         $active = $request->get('active');
 
         if (!$active === null) {
+
             if ($active) {
                 $link->setIsActive(true);
             } else {
                 $link->setIsActive(false);
             }
+
         }
 
         $shortUrl = $request->get('shortUrl');
