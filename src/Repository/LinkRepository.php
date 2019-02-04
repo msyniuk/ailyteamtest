@@ -33,7 +33,7 @@ class LinkRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('l')
             ->andWhere('l.id = :id')
             ->setParameter('id', $id)
-            ->orderBy('c.id', 'ASC')
+            ->orderBy('l.id', 'ASC')
             ->getQuery()
             ->getResult()
         ;
@@ -55,6 +55,19 @@ class LinkRepository extends ServiceEntityRepository
     {
         $this->em->remove($link);
         $this->em->flush();
+    }
+
+    public function findStatisticsById($id)
+    {
+        return $this->createQueryBuilder('l')
+            ->leftJoin('l.statistic', 's')
+            ->addSelect('s')
+            ->andWhere('l.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('l.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+            ;
     }
 
 }

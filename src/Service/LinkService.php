@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Link;
 use App\Repository\LinkRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class LinkService
 {
@@ -72,6 +73,13 @@ class LinkService
         if ($link) {
             $this->linkRepository->delete($link);
         }
+    }
+
+    public function getLinkStatistics(int $linkId): ?ArrayCollection
+    {
+        $statisctics = $this->linkRepository->findStatisticsById($linkId);
+
+        return $statisctics;
     }
 
 }
