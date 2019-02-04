@@ -16,7 +16,7 @@ class LinkController extends AbstractFOSRestController
      * @var LinkService
      */
     private $linkService;
-    
+
     /**
      * LinkController constructor.
      * @param LinkService $linkService
@@ -46,6 +46,10 @@ class LinkController extends AbstractFOSRestController
     {
         $link = $this->linkService->getLink($linkId);
 
+        if (!$link) {
+            return View::create('Link not found', Response::HTTP_OK);
+        }
+
         // 200 HTTP OK response with the request object
         return View::create($link, Response::HTTP_OK);
     }
@@ -58,6 +62,10 @@ class LinkController extends AbstractFOSRestController
     {
         $links = $this->linkService->getAllLinks();
 
+        if (!$links) {
+            return View::create('No links', Response::HTTP_OK);
+        }
+
         // 200 HTTP OK response with the collection of link object
         return View::create($links, Response::HTTP_OK);
     }
@@ -68,8 +76,7 @@ class LinkController extends AbstractFOSRestController
      */
     public function putLink(int $linkId, Request $request): View
     {
-        $link = $this->linkService->updateLink($linkId, $request->get('url'),
-            $request->get('lifetime'), $request->get('shorturl'), $request->get('active'));
+        $link = $this->linkService->updateLink($linkId, $request);
 
         // 200 HTTP OK response with the object as a result of PUT
         return View::create($link, Response::HTTP_OK);
@@ -95,6 +102,9 @@ class LinkController extends AbstractFOSRestController
     {
         $statistics = $this->linkService->getLinkStatistics($linkId);
 
+        if (!$statistics) {
+            return View::create('No statistics for this link', Response::HTTP_OK);
+        }
         // 200 HTTP OK response with the request object
         return View::create($statistics, Response::HTTP_OK);
     }
